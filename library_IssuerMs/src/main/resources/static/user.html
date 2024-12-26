@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Library Management System</h1>
+        <h2>User Module</h2>
+
+        <!-- Add a New Book -->
+        <h2>Get a New Book</h2>
+        <div class="form-group">
+            
+            <label for="addISBN">ISBN</label>
+            <input type="number" id="addISBN" placeholder="Enter book ISBN">
+            <label for="addCustId">Customer Id</label>
+            <input type="number" id="addCustId" placeholder="Enter Customer Id">  
+            <label for="addTotalCopies">TotalCopies</label>
+            <input type="number" id="addTotalCopies" placeholder="Enter Total Copies">
+            <button onclick="getBook()">Get a Book</button>
+        </div>
+        <div id="searchResult" class="result"></div>
+
+       
+
+        
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8071'; // base url
+
+        // Add a New Book
+        async function getBook() {
+            
+            const isbn = document.getElementById('addISBN').value;
+            const custId = document.getElementById('addCustId').value;
+            const no_of_Copies = document.getElementById('addTotalCopies').value;
+           
+
+            if (!isbn || !custId || !no_of_Copies) {
+                alert('Please fill all fields.');
+                return;
+            }
+
+            const book = { isbn: parseInt(isbn), custId: parseInt(custId), no_of_Copies: parseInt(no_of_Copies) };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/issueBook`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(book),
+                });
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    console.error('Error adding book:', error);
+                    alert('Book not found or insufficient copies available.');
+                    return;
+                }
+                
+
+                const result = await response.json();
+                alert(`Book Issued: ${result.isbn}`);
+            } catch (err) {
+                console.error('Error:', err);
+                alert('An error occurred. Check console for details.');
+            }
+        }
+
+
+       
+
+          
+
+      
+
+    </script>
+</body>
+
+</html>

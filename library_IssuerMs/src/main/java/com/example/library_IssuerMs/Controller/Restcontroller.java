@@ -50,9 +50,12 @@ public class Restcontroller {
             //sent the no of copies issued to the book ms
             String issuedcopyStr=String.valueOf(obj.getNo_of_Copies());
             kafka.send("issuedCopies",isbn,issuedcopyStr);
+            return ResponseEntity.ok(obj);
             
            }
-           return ResponseEntity.ok(obj);
+           else{
+            return ResponseEntity.notFound().build();
+           }
 
     }
 
