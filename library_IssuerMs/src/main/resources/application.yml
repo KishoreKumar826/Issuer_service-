@@ -1,0 +1,31 @@
+# Conversion to YAML from Properties formar report
+# Warnings:
+# - The yaml file had comments which are lost in the refactoring!
+spring:
+  application:
+    name: library_IssuerMs
+    #save the data in this file . Evrytime you rerun the application DB will be lost. This is why we sepcify the file
+  datasource:
+    url: jdbc:h2:file:./data/testdb
+    username: sa
+    password: ''
+    #Updates the database schema to match the current entity definitions without dropping existing data.
+  jpa:
+    hibernate:
+      ddl-auto: update
+      #It activates the H2 database console, a web-based UI for interacting with the in-memory or file-
+
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8071
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8072/eureka
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 5
