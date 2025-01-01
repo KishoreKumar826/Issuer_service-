@@ -1,3 +1,33 @@
+/**
+ * Restcontroller class handles the REST API endpoints for the library issuer service.
+ * It provides endpoints for issuing books and fetching customer details.
+ * 
+ * Annotations:
+ * @RestController - Indicates that this class is a REST controller.
+ * 
+ * Dependencies:
+ * @Autowired - Injects the required dependencies.
+ * 
+ * Methods:
+ * 
+ * @GetMapping("/") 
+ * public static String welcome()
+ * - Endpoint to welcome users to the issuer service.
+ * - Returns a welcome message.
+ * 
+ * @PostMapping("/issueBook")
+ * public ResponseEntity<Object> issueBook(@RequestBody Issuer obj) throws InterruptedException
+ * - Endpoint to issue a book to a customer.
+ * - Sends the ISBN to a Kafka topic and waits for an update.
+ * - Checks if the available copies are greater than the requested copies.
+ * - If yes, saves the issuer details to the database and sends the issued copies to a Kafka topic.
+ * - Returns the issuer details if successful, otherwise returns a 404 response.
+ * 
+ * @GetMapping("/fetchAllCustDetails")
+ * public List<Issuer> fetchAllCustDetails()
+ * - Endpoint to fetch all customer details.
+ * - Returns a list of all issuers from the database.
+ */
 package com.example.library_IssuerMs.Controller;
 
 
