@@ -3,7 +3,7 @@
 # - The yaml file had comments which are lost in the refactoring!
 spring:
   application:
-    name: library_IssuerMs
+    name: libraryIssuerMs
     #save the data in this file . Evrytime you rerun the application DB will be lost. This is why we sepcify the file
   datasource:
     url: jdbc:h2:file:./data/testdb
